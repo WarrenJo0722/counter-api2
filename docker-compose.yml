@@ -4,19 +4,12 @@ services:
     ports:
       - "6379:6379"
 
-  app1:
-    build: .
+  app:
+    image: keonjo/counter-app:latest
     environment:
       REDIS_HOST: redis
     depends_on:
       - redis
-  app2:
-    build: .
-    environment:
-      REDIS_HOST: redis
-    depends_on:
-      - redis
-
 
   nginx:
     image: nginx:alpine
