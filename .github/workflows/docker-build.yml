@@ -28,11 +28,13 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           HOST: ${{ secrets.EC2_HOST }}
         run: |
-          # 설정 파일 전송
-          scp -i key.pem -o StrictHostKeyChecking=no \
-          docker-compose.yml ubuntu@$HOST:~
+          # 키 파일 생성
           echo "$SSH_PRIVATE_KEY" > key.pem
           chmod 600 key.pem
+          # docker-compose.yml 전송
+          scp -i key.pem -o StrictHostKeyChecking=no \
+          docker-compose.yml ubuntu@$HOST:~
+          # 깃허브 서버에서 EC2 원격 접속
           ssh -i key.pem -o StrictHostKeyChecking=no ubuntu@$HOST << 'EOF'
             cd ~
             docker-compose pull
