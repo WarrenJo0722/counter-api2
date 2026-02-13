@@ -34,10 +34,10 @@ jobs:
           chmod 600 key.pem
           # docker-compose.yml 전송
           scp -i key.pem -o StrictHostKeyChecking=no \
-          docker-compose.yml ubuntu@$HOST:~
+          docker-compose.yml ubuntu@$HOST:/home/ubuntu/
           # nginx.conf도 전송
           scp -i key.pem -o StrictHostKeyChecking=no \
-          nginx.conf ubuntu@$HOST:~
+          nginx.conf ubuntu@$HOST:/home/ubuntu/
           # 깃허브 서버에서 EC2 원격 접속 및 배포
           ssh -i key.pem -o StrictHostKeyChecking=no ubuntu@$HOST << 'EOF'
             cd ~
