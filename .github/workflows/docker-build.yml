@@ -35,11 +35,14 @@ jobs:
           # docker-compose.yml 전송
           scp -i key.pem -o StrictHostKeyChecking=no \
           docker-compose.yml ubuntu@$HOST:~
+          # nginx.conf도 전송
+          scp -i key.pem -o StrictHostKeyChecking=no \
+          nginx.conf ubuntu@$HOST:~/
           # 깃허브 서버에서 EC2 원격 접속 및 배포
           ssh -i key.pem -o StrictHostKeyChecking=no ubuntu@$HOST << 'EOF'
             cd ~
             docker-compose down
             docker-compose pull
-            docker-compose up -d --scale app=1
+            docker-compose up -d --scale app=1 # 스케일링 1개만
             docker-compose restart nginx
           EOF
