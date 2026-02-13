@@ -37,6 +37,10 @@ jobs:
             rm -f /home/ubuntu/nginx.conf /home/ubuntu/docker-compose.yml
             # 모든 컨테이너 강제 삭제
             docker rm -f $(docker ps -aq) 2>/dev/null || true
+            # 80 포트 사용 프로세스 강제 종료
+            sudo fuser -k 80/tcp 2>/dev/null || true
+            # 잠시 대기
+            sleep 2
             touch /home/ubuntu/nginx.conf /home/ubuntu/docker-compose.yml
             chmod 644 /home/ubuntu/nginx.conf /home/ubuntu/docker-compose.yml
           PREP
