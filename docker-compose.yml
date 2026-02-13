@@ -5,6 +5,8 @@ services:
       - "6379:6379"
 
   app:
+    # "build: ." 삭제
+    # 깃허브 워크플로우에서 도커 허브로 이미지를 빌드해 올리기 때문에 도커 컴포즈에서는 이미지를 pull 해오기만 하면 된다.
     image: keonjo/counter-app:latest
     environment:
       REDIS_HOST: redis
