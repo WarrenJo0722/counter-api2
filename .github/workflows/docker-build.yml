@@ -31,8 +31,8 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > key.pem
           chmod 600 key.pem
           ssh -i key.pem -o StrictHostKeyChecking=no ubuntu@$HOST << 'EOF'
-            cd ~/counter
+            cd ~
             docker-compose pull
-            docker-compose up -d --scale app=3
+            docker-compose up -d --scale app=1
             docker-compose restart nginx
           EOF
