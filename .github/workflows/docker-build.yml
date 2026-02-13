@@ -34,9 +34,11 @@ jobs:
           chmod 600 key.pem
           # 먼저 기존 파일 삭제 및 권한 설정
           ssh -i key.pem -o StrictHostKeyChecking=no ubuntu@$HOST << 'PREP'
-          rm -f /home/ubuntu/nginx.conf /home/ubuntu/docker-compose.yml
-          touch /home/ubuntu/nginx.conf /home/ubuntu/docker-compose.yml
-          chmod 644 /home/ubuntu/nginx.conf /home/ubuntu/docker-compose.yml
+            rm -f /home/ubuntu/nginx.conf /home/ubuntu/docker-compose.yml
+            # 모든 컨테이너 강제 삭제
+            docker rm -f $(docker ps -aq) 2>/dev/null || true
+            touch /home/ubuntu/nginx.conf /home/ubuntu/docker-compose.yml
+            chmod 644 /home/ubuntu/nginx.conf /home/ubuntu/docker-compose.yml
           PREP
           # docker-compose.yml 전송
           scp -i key.pem -o StrictHostKeyChecking=no \
